@@ -1,0 +1,140 @@
+<section class="h-100 bg-dark">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card card-registration my-4">
+                    <div class="row g-0">
+                        <div class="col-xl-6 d-xl-block">
+                            <img src="../../../assets/img/SSL.jpg" alt="Sample photo" class="img-fluid"
+                                style="border-top-left-radius: .25rem;height: -webkit-fill-available; border-bottom-left-radius: .25rem;" />
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card-body p-md-5 text-black">
+                                <form [formGroup]="formModel" (submit)="onSubmit(registerModal,content)">
+                                    <h3 class="mb-5 text-uppercase">SSL 2022 : Registeration Form</h3>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Example1m">Full Name</label>
+                                                <input type="text" id="form3Example1m" class="form-control" id="name"
+                                                    formControlName="name" placeholder="Enter your name" />
+                                                <span class="errorMsg"
+                                                    *ngIf="name && name.invalid && name.touched">*Please enter valid
+                                                    Name</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Example1n">Mobile No</label>
+                                                <input type="text" id="form3Example1n" id="phone"
+                                                    formControlName="phone" placeholder="Enter your Phone No."
+                                                    class="form-control" />
+                                                <span class="errorMsg"
+                                                    *ngIf="phone && phone.invalid && phone.touched">*Please enter valid
+                                                    Phone No.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Example1m1">Email Id</label>
+                                                <input type="text" id="form3Example1m1" id="email"
+                                                    formControlName="email" placeholder="name@example.com"
+                                                    class="form-control" />
+                                                <span class="errorMsg"
+                                                    *ngIf="email && email.invalid && email.touched">*Please enter valid
+                                                    Email</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Example1n1">Sabha</label>
+                                                <select class="form-control" #team class="form-control" id="sabha"
+                                                    formControlName="sabha" (change)="selectSabha(team.value)">
+                                                    <option value="null">Select Sabha</option>
+                                                    <option *ngFor="let sabha of sabhaOption" [value]="sabha">{{sabha}}
+                                                    </option>
+                                                </select>
+                                                <span class="errorMsg"
+                                                    *ngIf="sabha && sabha.invalid && sabha.touched">*Please Select
+                                                    Sabha</span>
+                                                <!-- <input type="text" id="form3Example1n1" class="form-control form-control-lg" /> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check mb-4">
+                                        <label class="form-check-label" for="form3Example8">Select Sport (Max 4, Min
+                                            1)</label>
+                                        <div *ngFor="let sport of sportOption">
+                                            <label class="form-check-label">
+                                                <input class="checkBx form-check-input" type="checkbox" [value]="sport"
+                                                    #checkboxes (change)="onCheckboxChange(content,$event)">
+                                                {{sport}}
+                                            </label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-end pt-3">
+                                        <button type="button" class="btn btn-light btn-lg mr-2" (click)="reset()">Reset
+                                            all</button>
+                                        <button type="submit" class="btn btn-warning btn-lg">Submit form</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="col-lg-12">
+    <ng-template #content let-modal>
+        <div class="modal-body">
+            <p>{{message}}</p>
+            <button type="button" class="close" #closeBtn aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </ng-template>
+</div>
+
+<ng-template #registerModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Registeration Successful</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" #entry_pass id="entry_pass">
+        <!-- <p id="screenshot_msg">
+			Please take <b>SCREENSHOT</b> of your entry pass
+		</p> -->
+
+        <a style="color: black;font-size: larger;font-weight: bold;display: block;text-align: center;" class="text-black">
+            <img src="../assets/img/ssl_no_bg.png" alt="Logo" width="30" height="24" class="align-text-top"> Suhradham Sports League 
+        </a>
+        <h4 class="text-center player_id">SSL ID : <span id="player_ssl_id">{{ssData.sslId}}</span></h4>
+        <h4 class="text-center player_name" id="player_name">{{ssData.name}}</h4>
+        <!-- <h4 class="text-center player_name" id="player_name">{{ssData.sabha}}</h4> -->
+        <div class="d-flex justify-content-center" style="border: #d8514e 27px solid;">
+            <qr-code value="{{ssData.sslId}}::{{ssData.mobileNo}}:::::{{ssData.name}}::{{ssData.emailId}}::{{ssData.sabha}}" size="300" errorCorrectionLevel="Q"  centerImageSrc="./assets/img/SSL.jpg"
+            centerImageSize="60"></qr-code>
+        </div>
+        <div class="player_block">
+            <h4>{{ssData.sabha}}</h4>
+        </div>
+        
+
+        <!-- <img src="../../../assets/img/SSL.jpg" style="width: -webkit-fill-available;"/> -->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-block btn-lg btn-outline-info" (click)="captureScreenshot()">
+            <i class="fa fa-camera"></i>
+            Take Screenshot</button>
+    </div>
+</ng-template>

@@ -1,0 +1,32 @@
+.containerBx {
+    padding: 20px;
+    display: flex;
+    height: calc(100vh - 50px);
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    a {
+        font-size: 1em;
+        width: 150px;
+        margin: auto;
+        text-decoration: none;
+        letter-spacing: 2px;
+        transition: 0.5s;
+        margin-bottom: 20px;
+        color: darkblue;
+        cursor: pointer;
+    }
+    img {
+        width: 80%;
+        height: calc(100vh - 150px);
+        margin: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .containerBx {
+        img {
+            width: 100%;
+        }
+    }
+}

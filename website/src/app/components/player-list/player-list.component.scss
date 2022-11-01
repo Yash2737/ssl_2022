@@ -1,0 +1,41 @@
+.containerBx {
+    padding: 20px;
+    height: calc(100vh - 50px);
+    .head {
+        display: flex;
+        justify-content: space-between;
+        h2 {
+            font-family: ui-monospace;
+            font-weight: 600;
+            color: darkblue;
+        }
+    }
+    .inputText {
+        display: flex;
+        align-items: center;
+        input {
+            width: 80%;
+            padding: 5px;
+            border: 1px solid darkgreen;
+            border-radius: 20px;
+        }
+    }
+    .selectSabha {
+        label {
+            font-size: 18px;
+            font-weight: 600;
+            color: darkgreen;
+        }
+    }
+    .table-wrapper {
+        max-height: 350px;
+        overflow: auto;
+        width: 100%;
+    }
+}
+.loginContainer {
+    padding: 20px;
+}
+.errorMsg {
+    color: red;
+}

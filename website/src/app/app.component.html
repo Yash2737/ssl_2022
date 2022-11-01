@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand">
+    <img src="../assets/img/ssl_no_bg.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+    Suhradham Sports League
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" routerLink="/home" routerLinkActive="active">
+          Home
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" routerLink="/register" routerLinkActive="active">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" routerLink="/player-list" routerLinkActive="active">Player-List</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+  <!-- <nav>
+   <div class="logo">
+      <img src="../assets/img/Logo.jpeg" alt="">
+      <h2><span>S</span>uhradam <span>S</span>port <span>L</span>eague</h2>
+   </div>
+    <ul>
+      <li routerLink="/home" routerLinkActive="active">Home</li>
+      <li routerLink="/register" routerLinkActive="active">Register</li>
+      <li routerLink="/player-list" routerLinkActive="active">Player-List</li>
+    </ul>
+  </nav> -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
