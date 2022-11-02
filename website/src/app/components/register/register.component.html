@@ -120,7 +120,7 @@
 
 <ng-template #registerModal let-modal>
     <div class="modal-header">
-        <h5 class="modal-title">Registeration Done Successfully</h5>
+        <h5 class="modal-title">Registration Done Successfully</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body" #entry_pass id="entry_pass">
@@ -135,7 +135,7 @@
         <h4 class="text-center player_name" id="player_name">{{ssData.firstName}} {{ssData.lastName}}</h4>
         <!-- <h4 class="text-center player_name" id="player_name">{{ssData.sabha}}</h4> -->
         <div class="d-flex justify-content-center" style="border: #d8514e 27px solid;">
-            <qr-code value="{{ssData.sslId}}::{{ssData.mobileNo}}:::::{{ssData.firstName}}::{{ssData.lastName}}::{{ssData.emailId}}::{{ssData.sabha}}" size="200" errorCorrectionLevel="Q"  centerImageSrc="./assets/img/SSL.jpg"
+            <qr-code value="{{ssData.sslId}}::{{ssData.mobileNo}}:::::{{ssData.firstName}}::{{ssData.lastName}}::{{ssData.emailId}}::{{ssData.sabha}}::{{ssData.memberType}}" size="200" errorCorrectionLevel="Q"  centerImageSrc="./assets/img/SSL.jpg"
             centerImageSize="45"></qr-code>
         </div>
         <div class="player_block">
