@@ -1,7 +1,13 @@
 const mongoose = require('mongoose');
 
 var registeration = new mongoose.Schema({
-    name: String,
+    firstName: String,
+    lastName: String,
+    memberType: {
+        type: String,
+        enum: ['Player', 'Spectator'],
+        default: 'Player'
+    },
     emailId: String,
     mobileNo: String,
     sabha: {

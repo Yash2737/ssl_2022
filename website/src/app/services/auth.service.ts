@@ -14,6 +14,11 @@ url:string = '';
   getUsers() {
     return this.http.get(this.url+'/ssl/registerations');
   }
+
+  getDash() {
+    return this.http.get(this.url+'/ssl/dashboard');
+  }
+
   addUser(formData:any) {
     return this.http.post(this.url+'/ssl/register', formData);
   }

@@ -17,7 +17,11 @@ export class PlayerListComponent implements OnInit {
   rows: any[] = [];
   temp: any[] = [];
   fileName = 'SSL_Registerations';
+  currentRole = '';
+  dashboardData;
+  totalRegs = 0;
   sabhaOption: any[] = ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarovdaya']
+  sabhaOptionDisplay: any[] = ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarovdaya']
   sportOption: any[] = [
     'Football',
     'Relay Race',
@@ -33,12 +37,60 @@ export class PlayerListComponent implements OnInit {
   adminArr: any[] = [
     {
       user: 'vaibhav@ssl.com',
-      password: 'vaibhav369'
+      password: 'vaibhav369',
+      role: 'Admin'
     },
     {
       user: 'yashsoni@ssl.com',
-      password: 'yashsoni@369'
+      password: 'yashsoni@369',
+      role: 'Admin'
+    },
+    {
+      user: 'asalpha@ssl.com',
+      password: 'asalpha@369',
+      role: 'Asalpha'
+    },
+    {
+      user: 'kurla@ssl.com',
+      password: 'kurla@369',
+      role: 'Kurla'
+    },
+    {
+      user: 'mulund@ssl.com',
+      password: 'mulund@369',
+      role: 'Mulund'
+    },
+    {
+      user: 'badlapur@ssl.com',
+      password: 'badlapur@369',
+      role: 'Badlapur'
+    },
+    {
+      user: 'east@ssl.com',
+      password: 'east@369',
+      role: 'Ghatkopar-East'
+    },
+    {
+      user: 'thane@ssl.com',
+      password: 'thane@369',
+      role: 'Thane'
+    },
+    {
+      user: 'chirag-nagar@ssl.com',
+      password: 'chirag-nagar@369',
+      role: 'Chirag Nagar'
+    },
+    {
+      user: 'sarovdaya@ssl.com',
+      password: 'sarovdaya@369',
+      role: 'Sarovdaya'
+    },
+    {
+      user: 'vikhroli@ssl.com',
+      password: 'vikhroli@369',
+      role: 'Vikhroli'
     }
+
   ]
 
   constructor(private serv: AuthService, private fb: FormBuilder,
@@ -60,14 +112,24 @@ export class PlayerListComponent implements OnInit {
     for (let i = 0; i < this.adminArr.length; i++) {
       if (this.adminArr[i].user == this.formModel.value.userID) {
         if (this.adminArr[i].password == this.formModel.value.Password) {
+          this.currentRole = this.adminArr[i].role;
+          if (this.currentRole == 'Admin') {
+            this.sabhaOptionDisplay = this.sabhaOption.filter(s => s);
+          } else {
+            this.sabhaOptionDisplay = this.sabhaOption.filter(s => s == this.currentRole);
+          }
           this.serv.getUsers().subscribe((res: any) => {
             res.data.forEach(d => {
-              if(d.sequence) {
+              if (d.sequence) {
                 d.sslId = 'SSL' + this.pad(d.sequence, 3);
               }
             });
             this.rows = res.data;
             this.temp = res.data;
+            if (this.currentRole !== 'Admin') {
+              this.selectSabha(this.currentRole)
+            }
+            this.getDashboardData();
           }, (err) => {
 
           })
@@ -83,6 +145,18 @@ export class PlayerListComponent implements OnInit {
         this.invalidMsg = 'Wrong User ID!'
       }
     }
+  }
+
+  getDashboardData() {
+    this.serv.getDash().subscribe((res: any) => {
+      this.dashboardData = res.data;
+      this.totalRegs = this.dashboardData.reduce((n, {count}) => n + count, 0)
+      if (this.currentRole !== 'Admin') {
+        this.selectSabha(this.currentRole)
+      }
+    }, (err) => {
+
+    })
   }
 
   selectSabha(val: any) {

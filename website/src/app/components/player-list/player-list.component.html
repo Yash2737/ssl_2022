@@ -1,4 +1,22 @@
 <div class="containerBx" *ngIf="showListContainer">
+  <div class="row mb-3">
+    <div class="card col-md-2 text-center mr-2">
+      <div class="card-header bg-info">
+        Total Regs
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{totalRegs}}</h5>
+      </div>
+    </div>
+    <div class="card col-md-2 text-center mr-2" *ngFor="let d of dashboardData">
+      <div class="card-header">
+        {{d._id}}
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{d.count}}</h5>
+      </div>
+    </div>
+  </div>
   <div class="head">
     <h2>Players List</h2>
     <button class="btn btn-outline-success" (click)="exportexcel()">Export Excel</button>
@@ -6,45 +24,46 @@
   <hr>
   <div class="row">
     <div class="col-md-4 inputText">
-      <input type="text" placeholder="Enter Name for Filter"
-      (keyup)='updateFilter($event)'>
+      <input type="text" placeholder="Enter Name for Filter" (keyup)='updateFilter($event)'>
     </div>
     <div class="col-md-4 selectSabha">
       <div class="form-group">
         <label for="sabha">Select Sabha</label>
-        <select #team class="form-control" id="sabha" (change)="selectSabha(team.value)">
-          <option value="0">Select All</option>
-          <option *ngFor="let sabha of sabhaOption" [value]="sabha">{{sabha}}</option>
+        <select *ngIf="currentRole" #team class="form-control" id="sabha" (change)="selectSabha(team.value)">
+          <option value="0" *ngIf="currentRole === 'Admin'">Select All</option>
+          <option *ngFor="let sabha of sabhaOptionDisplay" [selected]="currentRole == sabha" [value]="sabha">{{sabha}}
+          </option>
         </select>
       </div>
     </div>
   </div>
-    <div class="table-wrapper">
-      <table class="table table-bordered table-hover table-responsive-lg table-striped" id="excel-table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">No.</th>
-            <th scope="col">Reg ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Sabha</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col" *ngFor="let s of sportOption">{{s}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let player of rows; let i = index">
-            <th scope="row">{{i+1}}</th>
-            <td>{{player?.sslId }}</td>
-            <td>{{player?.name}}</td>
-            <td>{{player?.sabha}}</td>
-            <td>{{player?.emailId}}</td>
-            <td>{{player?.mobileNo}}</td>
-            <td *ngFor="let s of sportOption">{{player?.sports.includes(s) ? s : 'NA'}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+
+  <div class="table-wrapper">
+    <table class="table table-bordered table-hover table-responsive-lg table-striped" id="excel-table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">No.</th>
+          <th scope="col">Reg ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Sabha</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
+          <th scope="col" *ngFor="let s of sportOption">{{s}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of rows; let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td>{{player?.sslId }}</td>
+          <td>{{player?.name}}</td>
+          <td>{{player?.sabha}}</td>
+          <td>{{player?.emailId}}</td>
+          <td>{{player?.mobileNo}}</td>
+          <td *ngFor="let s of sportOption">{{player?.sports.includes(s) ? s : 'NA'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 </div>
 
@@ -54,7 +73,8 @@
   </button>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -67,9 +87,9 @@
         <p class="errorMsg">{{invalidMsg}}</p>
         <form [formGroup]="formModel" autocomplete="off">
           <div class="form-group" required>
-              <label>User ID :</label>
-              <input class="form-control" formControlName="userID">
-              <span class="errorMsg" *ngIf="userID && userID.invalid && userID.touched">*Pls fill valid User ID</span>
+            <label>User ID :</label>
+            <input class="form-control" formControlName="userID">
+            <span class="errorMsg" *ngIf="userID && userID.invalid && userID.touched">*Pls fill valid User ID</span>
           </div>
           <div class="form-group">
             <label>Password :</label>

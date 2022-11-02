@@ -4,9 +4,9 @@
             <div class="col">
                 <div class="card card-registration my-4">
                     <div class="row g-0">
-                        <div class="col-xl-6 d-xl-block">
+                        <div class="align-self-md-center col-xl-6 d-flex d-xl-block">
                             <img src="../../../assets/img/SSL.jpg" alt="Sample photo" class="img-fluid"
-                                style="border-top-left-radius: .25rem;height: -webkit-fill-available; border-bottom-left-radius: .25rem;" />
+                                style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
                         </div>
                         <div class="col-xl-6">
                             <div class="card-body p-md-5 text-black">
@@ -16,11 +16,21 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
                                             <div class="form-outline">
-                                                <label class="form-label" for="form3Example1m">Full Name</label>
-                                                <input type="text" id="form3Example1m" class="form-control" id="name"
-                                                    formControlName="name" placeholder="Enter your name" />
+                                                <label class="form-label" for="form3Example1m">First Name</label>
+                                                <input type="text" id="form3Example1m" class="form-control" id="firstName"
+                                                    formControlName="firstName" placeholder="Enter your first name" />
                                                 <span class="errorMsg"
-                                                    *ngIf="name && name.invalid && name.touched">*Please enter valid
+                                                    *ngIf="firstName && firstName.invalid && firstName.touched">*Please enter First
+                                                    Name</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Example1m">Last Name</label>
+                                                <input type="text" id="form3Example1m" class="form-control" id="name"
+                                                    formControlName="lastName" placeholder="Enter your last name" />
+                                                <span class="errorMsg"
+                                                    *ngIf="lastName && lastName.invalid && lastName.touched">*Please enter Last
                                                     Name</span>
                                             </div>
                                         </div>
@@ -85,6 +95,9 @@
                                         <button type="submit" class="btn btn-warning btn-lg">Submit form</button>
                                     </div>
                                 </form>
+                                <div class="alert alert-info mt-2" role="alert">
+                                    For more details, contact us at: <a href="tel:+917208899993">7208899993 !</a> 
+                                  </div>
                             </div>
                         </div>
                     </div>
@@ -107,7 +120,7 @@
 
 <ng-template #registerModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title">Registeration Successful</h4>
+        <h5 class="modal-title">Registeration Done Successfully</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body" #entry_pass id="entry_pass">
@@ -115,15 +128,15 @@
 			Please take <b>SCREENSHOT</b> of your entry pass
 		</p> -->
 
-        <a style="color: black;font-size: larger;font-weight: bold;display: block;text-align: center;" class="text-black">
+        <a style="color: black;font-size: x-large;font-weight: bold;display: block;text-align: center;" class="text-black">
             <img src="../assets/img/ssl_no_bg.png" alt="Logo" width="30" height="24" class="align-text-top"> Suhradham Sports League 
         </a>
-        <h4 class="text-center player_id">SSL ID : <span id="player_ssl_id">{{ssData.sslId}}</span></h4>
-        <h4 class="text-center player_name" id="player_name">{{ssData.name}}</h4>
+        <h5 class="text-center player_id">SSL Player ID : <span id="player_ssl_id">{{ssData.sslId}}</span></h5>
+        <h4 class="text-center player_name" id="player_name">{{ssData.firstName}} {{ssData.lastName}}</h4>
         <!-- <h4 class="text-center player_name" id="player_name">{{ssData.sabha}}</h4> -->
         <div class="d-flex justify-content-center" style="border: #d8514e 27px solid;">
-            <qr-code value="{{ssData.sslId}}::{{ssData.mobileNo}}:::::{{ssData.name}}::{{ssData.emailId}}::{{ssData.sabha}}" size="300" errorCorrectionLevel="Q"  centerImageSrc="./assets/img/SSL.jpg"
-            centerImageSize="60"></qr-code>
+            <qr-code value="{{ssData.sslId}}::{{ssData.mobileNo}}:::::{{ssData.firstName}}::{{ssData.lastName}}::{{ssData.emailId}}::{{ssData.sabha}}" size="200" errorCorrectionLevel="Q"  centerImageSrc="./assets/img/SSL.jpg"
+            centerImageSize="45"></qr-code>
         </div>
         <div class="player_block">
             <h4>{{ssData.sabha}}</h4>

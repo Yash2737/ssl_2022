@@ -16,6 +16,29 @@ sslService.getRegisterations = async (req, res) => {
     }
 }
 
+sslService.getDashboard = async (req, res) => {
+    try {
+        var regs = await registerationModel.aggregate([
+            {
+                '$group': {
+                  '_id': '$sabha', 
+                  'count': {
+                    '$sum': 1
+                  }
+                }
+              }
+        ]);
+        if (regs?.length > 0) {
+            return { statusCode: 200, message: 'Registeration Dashboard', data: regs, res }
+        }
+        else {
+            return { statusCode: 404, message: 'No registerations found', data: '', res }
+        }
+    } catch (e) {
+        return { statusCode: 500, message: 'Internal Server Error', data: '', res, error: e }
+    }
+}
+
 sslService.register = async (req, res) => {
     try {
         const { name, emailId, mobileNo, sabha, sports } = req.body

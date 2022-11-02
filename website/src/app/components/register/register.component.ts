@@ -21,7 +21,8 @@ export class RegisterComponent implements OnInit {
   sabhaName;
   ssData;
   formModel = this.fb.group({
-    name: ['', Validators.required],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required, Validators.maxLength(11), Validators.minLength(8), Validators.pattern(this.pattern)]],
     sabha: [null, Validators.required],
@@ -50,8 +51,11 @@ export class RegisterComponent implements OnInit {
 
 
   }
-  get name() {
-    return this.formModel.get('name');
+  get firstName() {
+    return this.formModel.get('firstName');
+  }
+  get lastName() {
+    return this.formModel.get('lastName');
   }
   get email() {
     return this.formModel.get('email');
@@ -68,7 +72,9 @@ export class RegisterComponent implements OnInit {
   onCheckboxChange(content, e: any) {
     if (this.sportsArr.length >= 4) {
       this.message = 'Please Select any 4 Games';
-      this.uncheckAll();
+      // this.uncheckAll();
+      e.target.checked = false;
+      // e.preventDefault();
       this.modalService.open(content, { scrollable: true, size: 'md', windowClass: 'customModal-xl' });
       setTimeout(() => {
         this.modalService.dismissAll();
@@ -111,9 +117,19 @@ export class RegisterComponent implements OnInit {
       }, 2500);
       return
     }
+    if(this.sportsArr.length <= 0) {
+      this.message = 'Please select atleast one sport';
+      this.modalService.open(msgModal, { scrollable: true, size: 'md', windowClass: 'customModal-xl' });
+      setTimeout(() => {
+        this.modalService.dismissAll();
+        this.message = "";
+      }, 2500);
+      return
+    }
     debugger
     const param = {
-      "name": this.formModel.value.name,
+      "firstName": this.formModel.value.firstName,
+      "lastName": this.formModel.value.lastName,
       "emailId": this.formModel.value.email,
       "mobileNo": this.formModel.value.phone,
       "sabha": this.sabhaName,
@@ -121,6 +137,8 @@ export class RegisterComponent implements OnInit {
     }
     console.log(this.formModel)
     console.log('params', param);
+    console.log('sss', this.sportsArr);
+
     this.serv.addUser(param).subscribe((res: any) => {
       this.sportsArr = [];
       this.uncheckAll();
