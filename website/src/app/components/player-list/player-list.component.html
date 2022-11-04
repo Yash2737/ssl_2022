@@ -12,8 +12,10 @@
       <div class="card-header">
         {{d._id}}
       </div>
-      <div class="card-body">
-        <h5 class="card-title">{{d.count}}</h5>
+      <div class="align-content-center card-body d-flex row">
+        <div class="col"><h5 class="card-title">{{d.count}}</h5></div> /
+        <div class="col"><h5 class="card-title">{{d.target}}</h5></div>
+        
       </div>
     </div>
   </div>
@@ -48,6 +50,7 @@
           <th scope="col">Sabha</th>
           <th scope="col">Email</th>
           <th scope="col">Phone</th>
+          <th scope="col">Participant Type</th>
           <th scope="col" *ngFor="let s of sportOption">{{s}}</th>
         </tr>
       </thead>
@@ -55,10 +58,11 @@
         <tr *ngFor="let player of rows; let i = index">
           <th scope="row">{{i+1}}</th>
           <td>{{player?.sslId }}</td>
-          <td>{{player?.name}}</td>
+          <td>{{player?.firstName}} {{player?.lastName}}</td>
           <td>{{player?.sabha}}</td>
           <td>{{player?.emailId}}</td>
           <td>{{player?.mobileNo}}</td>
+          <td>{{player?.memberType}}</td>
           <td *ngFor="let s of sportOption">{{player?.sports.includes(s) ? s : 'NA'}}</td>
         </tr>
       </tbody>

@@ -20,8 +20,8 @@ export class PlayerListComponent implements OnInit {
   currentRole = '';
   dashboardData;
   totalRegs = 0;
-  sabhaOption: any[] = ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarovdaya']
-  sabhaOptionDisplay: any[] = ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarovdaya']
+  sabhaOption: any[] = ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarvodaya']
+  sabhaOptionDisplay: any[] = ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarvodaya']
   sportOption: any[] = [
     'Football',
     'Relay Race',
@@ -81,9 +81,9 @@ export class PlayerListComponent implements OnInit {
       role: 'Chirag Nagar'
     },
     {
-      user: 'sarovdaya@ssl.com',
-      password: 'sarovdaya@369',
-      role: 'Sarovdaya'
+      user: 'sarvodaya@ssl.com',
+      password: 'sarvodaya@369',
+      role: 'Sarvodaya'
     },
     {
       user: 'vikhroli@ssl.com',
@@ -150,7 +150,28 @@ export class PlayerListComponent implements OnInit {
   getDashboardData() {
     this.serv.getDash().subscribe((res: any) => {
       this.dashboardData = res.data;
-      this.totalRegs = this.dashboardData.reduce((n, {count}) => n + count, 0)
+      this.dashboardData.forEach(d => {
+        switch (d._id) {
+          case 'Ghatkopar-East':
+          case 'Asalpha':
+            d.target = 130;
+            break;
+          case 'Kurla':
+          case 'Mulund':
+          case 'Badlapur':
+          case 'Vikhroli':
+            d.target = 40;
+            break;
+          case 'Chirag Nagar':
+          case 'Sarvodaya':
+            d.target = 90;
+            break;
+          case 'Thane':
+            d.target = 30;
+            break;
+        }
+      });
+      this.totalRegs = this.dashboardData.reduce((n, { count }) => n + count, 0)
       if (this.currentRole !== 'Admin') {
         this.selectSabha(this.currentRole)
       }

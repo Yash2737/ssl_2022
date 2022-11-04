@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
   formModel = this.fb.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
+    memberType: ['Player', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required, Validators.maxLength(11), Validators.minLength(8), Validators.pattern(this.pattern)]],
     sabha: [null, Validators.required],
@@ -35,7 +36,7 @@ export class RegisterComponent implements OnInit {
     private modalService: NgbModal,
     private captureService: NgxCaptureService
   ) { }
-  sabhaOption: any[] = ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarovdaya']
+  sabhaOption: any[] = ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarvodaya']
   sportOption: any[] = [
     'Football',
     'Relay Race',
@@ -50,6 +51,9 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
 
 
+  }
+  get memberType() {
+    return this.formModel.get('memberType');
   }
   get firstName() {
     return this.formModel.get('firstName');
@@ -92,22 +96,24 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(screenshotModal, msgModal) {
-  //   this.ssData = {
-  //     "name": "Yash Suresh Soni",
-  //     "emailId": "yashsoni1997@gmail.com",
-  //     "mobileNo": "9920571053",
-  //     "sabha": "Ghatkopar-East",
-  //     "sports": [
-  //         "Relay Race"
-  //     ],
-  //     "sequence": 999,
-  //     "_id": "635d6c10aa9d1a99f58b4f7d",
-  //     "createdAt": "2022-10-29T18:08:16.698Z",
-  //     "updatedAt": "2022-10-29T18:08:16.698Z",
-  //     "__v": 0
-  // }
-  //     this.ssData.sslId = 'SSL' + this.pad(this.ssData.sequence, 3);
-  //   this.modalService.open(screenshotModal, { scrollable: true, size: 'md', windowClass: 'customModal-xl' });
+    //   this.ssData = {
+    //     "firstName": "Yash",
+    //     "lastName": "Soni",
+    //     "emailId": "yashsoni1997@gmail.com",
+    //     "mobileNo": "9920571053",
+    //     "sabha": "Ghatkopar-East",
+    //     "sports": [
+    //         "Relay Race"
+    //     ],
+    //     "memberType":"Spectator",
+    //     "sequence": 999,
+    //     "_id": "635d6c10aa9d1a99f58b4f7d",
+    //     "createdAt": "2022-10-29T18:08:16.698Z",
+    //     "updatedAt": "2022-10-29T18:08:16.698Z",
+    //     "__v": 0
+    // }
+    //     this.ssData.sslId = 'SSL' + this.pad(this.ssData.sequence, 3);
+    //   this.modalService.open(screenshotModal, { scrollable: true, size: 'md', windowClass: 'customModal-xl' });
     if (this.formModel.invalid) {
       this.message = 'Form Invalid or Fields missing';
       this.modalService.open(msgModal, { scrollable: true, size: 'md', windowClass: 'customModal-xl' });
@@ -117,7 +123,7 @@ export class RegisterComponent implements OnInit {
       }, 2500);
       return
     }
-    if(this.sportsArr.length <= 0) {
+    if (this.sportsArr.length <= 0 && this.formModel.value.memberType === 'Player') {
       this.message = 'Please select atleast one sport';
       this.modalService.open(msgModal, { scrollable: true, size: 'md', windowClass: 'customModal-xl' });
       setTimeout(() => {
@@ -130,6 +136,7 @@ export class RegisterComponent implements OnInit {
     const param = {
       "firstName": this.formModel.value.firstName,
       "lastName": this.formModel.value.lastName,
+      "memberType": this.formModel.value.memberType,
       "emailId": this.formModel.value.email,
       "mobileNo": this.formModel.value.phone,
       "sabha": this.sabhaName,
@@ -184,10 +191,18 @@ export class RegisterComponent implements OnInit {
     return num;
   }
 
+  onMemberChange(ss) {
+    if(ss === 'Spectator') {
+      this.sportsArr = [];
+      this.uncheckAll();
+        }
+  }
+
   reset() {
     this.sportsArr = [];
     this.uncheckAll();
     this.formModel.reset();
+    this.formModel.patchValue({memberType:'Player'});
   }
   uncheckAll() {
     this.checkboxes.forEach((element) => {

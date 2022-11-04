@@ -12,7 +12,7 @@ var registeration = new mongoose.Schema({
     mobileNo: String,
     sabha: {
         type: String,
-        enum: ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarovdaya']
+        enum: ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarvodaya']
     },
     sports: [String],
     sequence: Number,

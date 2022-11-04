@@ -17,10 +17,12 @@
                                         <div class="col-md-6 mb-4">
                                             <div class="form-outline">
                                                 <label class="form-label" for="form3Example1m">First Name</label>
-                                                <input type="text" id="form3Example1m" class="form-control" id="firstName"
-                                                    formControlName="firstName" placeholder="Enter your first name" />
+                                                <input type="text" id="form3Example1m" class="form-control"
+                                                    id="firstName" formControlName="firstName"
+                                                    placeholder="Enter your first name" />
                                                 <span class="errorMsg"
-                                                    *ngIf="firstName && firstName.invalid && firstName.touched">*Please enter First
+                                                    *ngIf="firstName && firstName.invalid && firstName.touched">*Please
+                                                    enter First
                                                     Name</span>
                                             </div>
                                         </div>
@@ -30,7 +32,8 @@
                                                 <input type="text" id="form3Example1m" class="form-control" id="name"
                                                     formControlName="lastName" placeholder="Enter your last name" />
                                                 <span class="errorMsg"
-                                                    *ngIf="lastName && lastName.invalid && lastName.touched">*Please enter Last
+                                                    *ngIf="lastName && lastName.invalid && lastName.touched">*Please
+                                                    enter Last
                                                     Name</span>
                                             </div>
                                         </div>
@@ -75,8 +78,28 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <fieldset class="row mb-3">
+                                        <legend class="col-form-label pt-0">Participant Type</legend>
+                                        <div class="col">
+                                          <div class="form-check-inline">
+                                            <input class="form-check-input" type="radio" id="gridRadios1" (change)="onMemberChange('Player')" value="Player" formControlName="memberType">
+                                            <label class="form-check-label" for="gridRadios1">
+                                              Player
+                                            </label>
+                                          </div>
+                                          </div>
+                                          <div class="col">
+                                          <div class="form-check-inline">
+                                            <input class="form-check-input" type="radio" id="gridRadios2" (change)="onMemberChange('Spectator')" value="Spectator" formControlName="memberType">
+                                            <label class="form-check-label" for="gridRadios2">
+                                              Spectator
+                                            </label>
+                                          </div>
+                                          
+                                        </div>
+                                      </fieldset>
 
-                                    <div class="form-check mb-4">
+                                    <div class="form-check mb-4" *ngIf="memberType.value !=='Spectator'">
                                         <label class="form-check-label" for="form3Example8">Select Sport (Max 4, Min
                                             1)</label>
                                         <div *ngFor="let sport of sportOption">
@@ -96,8 +119,8 @@
                                     </div>
                                 </form>
                                 <div class="alert alert-info mt-2" role="alert">
-                                    For more details, contact us at: <a href="tel:+917208899993">7208899993 !</a> 
-                                  </div>
+                                    For more details, contact us at: <a href="tel:+917208899993">7208899993 !</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -128,20 +151,28 @@
 			Please take <b>SCREENSHOT</b> of your entry pass
 		</p> -->
 
-        <a style="color: black;font-size: x-large;font-weight: bold;display: block;text-align: center;" class="text-black">
-            <img src="../assets/img/ssl_no_bg.png" alt="Logo" width="30" height="24" class="align-text-top"> Suhradham Sports League 
+        <a style="color: black;font-size: x-large;font-weight: bold;display: block;text-align: center;"
+            class="text-black">
+            <img src="../assets/img/ssl_no_bg.png" alt="Logo" width="30" height="24" class="align-text-top"> Suhradham
+            Sports League
         </a>
         <h5 class="text-center player_id">SSL Player ID : <span id="player_ssl_id">{{ssData.sslId}}</span></h5>
         <h4 class="text-center player_name" id="player_name">{{ssData.firstName}} {{ssData.lastName}}</h4>
         <!-- <h4 class="text-center player_name" id="player_name">{{ssData.sabha}}</h4> -->
-        <div class="d-flex justify-content-center" style="border: #d8514e 27px solid;">
-            <qr-code value="{{ssData.sslId}}::{{ssData.mobileNo}}:::::{{ssData.firstName}}::{{ssData.lastName}}::{{ssData.emailId}}::{{ssData.sabha}}::{{ssData.memberType}}" size="200" errorCorrectionLevel="Q"  centerImageSrc="./assets/img/SSL.jpg"
-            centerImageSize="45"></qr-code>
-        </div>
         <div class="player_block">
             <h4>{{ssData.sabha}}</h4>
         </div>
-        
+        <div class="d-flex justify-content-center"
+            style="border: #d8514e 27px solid;border-top-width: 0; border-bottom-width: 0;">
+            <qr-code
+                value="{{ssData.sslId}}::{{ssData.mobileNo}}:::::{{ssData.firstName}}::{{ssData.lastName}}::{{ssData.emailId}}::{{ssData.sabha}}::{{ssData.memberType}}"
+                size="200" errorCorrectionLevel="Q" centerImageSrc="./assets/img/SSL.jpg" centerImageSize="45">
+            </qr-code>
+        </div>
+        <div class="player_block">
+            <h4>{{ssData.memberType}}</h4>
+        </div>
+
 
         <!-- <img src="../../../assets/img/SSL.jpg" style="width: -webkit-fill-available;"/> -->
     </div>
