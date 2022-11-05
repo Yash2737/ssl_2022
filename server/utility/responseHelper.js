@@ -15,7 +15,6 @@ function manage_response(err, res, data, statusCode, message) {
         res.status(200).send({ message: message, data: data })
     }
 }
-
 function sendResponse(response) {
     const { statusCode, error, res, message, data } = response
     if (error) {

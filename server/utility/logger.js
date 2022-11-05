@@ -14,9 +14,7 @@ log4js.configure({
         PROD: { appenders: ['console', 'authlog'], level: 'warn' }
     }
 });
-
-const log = log4js.getLogger(process.env.NODE_ENV)
-
+const log = log4js.getLogger('DEV')
 module.exports = {
     logger: log,
     logRequest: function (req, res, next) {

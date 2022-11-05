@@ -20,13 +20,39 @@ sslService.getDashboard = async (req, res) => {
     try {
         var regs = await registerationModel.aggregate([
             {
-                '$group': {
-                  '_id': '$sabha', 
-                  'count': {
-                    '$sum': 1
-                  }
+                '$project': {
+                    'sabha': 1, 
+                    'memberType': 1, 
+                    'onlyPlayer': {
+                        '$cond': [
+                            {
+                                '$eq': [
+                                    '$memberType', 'Player'
+                                ]
+                            }, 1, 0
+                        ]
+                    }, 
+                    'onlySpectator': {
+                        '$cond': [
+                            {
+                                '$eq': [
+                                    '$memberType', 'Spectator'
+                                ]
+                            }, 1, 0
+                        ]
+                    }
                 }
-              }
+            }, {
+                '$group': {
+                    '_id': '$sabha', 
+                    'countPlayer': {
+                        '$sum': '$onlyPlayer'
+                    }, 
+                    'countSpectator': {
+                        '$sum': '$onlySpectator'
+                    }
+                }
+            }
         ]);
         if (regs?.length > 0) {
             return { statusCode: 200, message: 'Registeration Dashboard', data: regs, res }
@@ -50,6 +76,7 @@ sslService.register = async (req, res) => {
                 return { statusCode: 200, message: 'Register Successful', data: user, res }
             }
             else {
+                logger.error(user);
                 return { statusCode: 500, message: 'Error registering player', data: '', res }
             }
         }
@@ -57,6 +84,7 @@ sslService.register = async (req, res) => {
             return { statusCode: 401, message: 'EmailId or MobileNo already exists', data: '', res }
         }
     } catch (e) {
+        logger.error('Registeration ERror ',e);
         console.log("error", e);
         return { statusCode: 500, message: 'Internal Server Error', data: '', res, error: e }
     }

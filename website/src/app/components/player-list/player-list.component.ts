@@ -20,6 +20,7 @@ export class PlayerListComponent implements OnInit {
   currentRole = '';
   dashboardData;
   totalRegs = 0;
+  totalSpecs = 0;
   sabhaOption: any[] = ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarvodaya']
   sabhaOptionDisplay: any[] = ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarvodaya']
   sportOption: any[] = [
@@ -171,7 +172,8 @@ export class PlayerListComponent implements OnInit {
             break;
         }
       });
-      this.totalRegs = this.dashboardData.reduce((n, { count }) => n + count, 0)
+      this.totalRegs = this.dashboardData.reduce((n, { countPlayer }) => n + countPlayer, 0)
+      this.totalSpecs = this.dashboardData.reduce((n, { countSpectator }) => n + countSpectator, 0)
       if (this.currentRole !== 'Admin') {
         this.selectSabha(this.currentRole)
       }

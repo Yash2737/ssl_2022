@@ -1,21 +1,41 @@
 <div class="containerBx" *ngIf="showListContainer">
+  <h2 class="pb-2">Admin Dashboard</h2>
+  <p class="border-bottom"> Mandal wise <b>Spectators </b> are shown in bracket</p>
   <div class="row mb-3">
-    <div class="card col-md-2 text-center mr-2">
-      <div class="card-header bg-info">
-        Total Regs
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">{{totalRegs}}</h5>
+    <div class="col-md-2">
+      <div class="card text-center mb-2">
+        <div class="card-header bg-info">
+          Total Players
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{totalRegs}}</h5>
+        </div>
       </div>
     </div>
-    <div class="card col-md-2 text-center mr-2" *ngFor="let d of dashboardData">
-      <div class="card-header">
-        {{d._id}}
+    <div class="col-md-2">
+      <div class="card text-center mb-2">
+        <div class="card-header bg-warning">
+          Total Spectators
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{totalSpecs}}</h5>
+        </div>
       </div>
-      <div class="align-content-center card-body d-flex row">
-        <div class="col"><h5 class="card-title">{{d.count}}</h5></div> /
-        <div class="col"><h5 class="card-title">{{d.target}}</h5></div>
-        
+    </div>
+    <div class="col-md-2" *ngFor="let d of dashboardData">
+      <div class="card text-center mb-2">
+        <div class="card-header">
+          {{d._id}}
+        </div>
+        <div class="align-content-center card-body d-flex row">
+          <div class="col">
+            <h5 class="card-title">{{d.countPlayer + d.countSpectator}} ({{d.countSpectator}})</h5>
+          </div> /
+          <div class="col">
+            <h5 class="card-title">{{d.target}}</h5>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

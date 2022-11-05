@@ -2,6 +2,12 @@ nav {
     height: 50px;
     z-index: 99;
 }
+
+.navbar-collapse.collapse.show {
+    background: white;
+    padding: 20px;
+}
+
 // nav {
 //     height: 50px;
 //     display: flex;
