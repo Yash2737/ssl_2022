@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build ./server --file ./server/Dockerfile --tag yashsoni2737/ssl_test:$(date +%s) --tag yashsoni2737/ssl_test:latest
+      run: docker build ./server --file ./server/Dockerfile --tag yashsoni2737/ssl_test:latest
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker push yashsoni2737/ssl_test:$(date +%s)
+      run: docker push yashsoni2737/ssl_test:latest
