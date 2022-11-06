@@ -18,7 +18,11 @@ export class PlayerListComponent implements OnInit {
   temp: any[] = [];
   fileName = 'SSL_Registerations';
   currentRole = '';
+  currentUser = '';
+  modalMsg = '';
+  deletePlayer;
   dashboardData;
+  gamesDashboard;
   totalRegs = 0;
   totalSpecs = 0;
   sabhaOption: any[] = ['Kurla', 'Mulund', 'Badlapur', 'Ghatkopar-East', 'Asalpha', 'Thane', 'Chirag Nagar', 'Vikhroli', 'Sarvodaya']
@@ -114,30 +118,14 @@ export class PlayerListComponent implements OnInit {
       if (this.adminArr[i].user == this.formModel.value.userID) {
         if (this.adminArr[i].password == this.formModel.value.Password) {
           this.currentRole = this.adminArr[i].role;
+          this.currentUser = this.adminArr[i].user;
           if (this.currentRole == 'Admin') {
             this.sabhaOptionDisplay = this.sabhaOption.filter(s => s);
           } else {
             this.sabhaOptionDisplay = this.sabhaOption.filter(s => s == this.currentRole);
           }
-          this.serv.getUsers().subscribe((res: any) => {
-            res.data.forEach(d => {
-              if (d.sequence) {
-                d.sslId = 'SSL' + this.pad(d.sequence, 3);
-              }
-            });
-            this.rows = res.data;
-            this.temp = res.data;
-            if (this.currentRole !== 'Admin') {
-              this.selectSabha(this.currentRole)
-            }
-            this.getDashboardData();
-          }, (err) => {
-
-          })
-          this.closeModal.nativeElement.click();
-          this.invalidMsg = '';
-          this.showListContainer = true;
-          this.loginContainer = false;
+       
+          this.getPlayersData();
 
         } else {
           this.invalidMsg = 'Wrong Password!'
@@ -148,9 +136,32 @@ export class PlayerListComponent implements OnInit {
     }
   }
 
+  getPlayersData() {
+    this.serv.getUsers().subscribe((res: any) => {
+      res.data.forEach(d => {
+        if (d.sequence) {
+          d.sslId = 'SSL' + this.pad(d.sequence, 3);
+        }
+      });
+      this.rows = res.data;
+      this.temp = res.data;
+      if (this.currentRole !== 'Admin') {
+        this.selectSabha(this.currentRole)
+      }
+      this.getDashboardData();
+    }, (err) => {
+
+    })
+    this.closeModal.nativeElement.click();
+    this.invalidMsg = '';
+    this.showListContainer = true;
+    this.loginContainer = false;
+  }
+
   getDashboardData() {
     this.serv.getDash().subscribe((res: any) => {
-      this.dashboardData = res.data;
+      this.dashboardData = res.data.regs;
+      this.gamesDashboard = res.data.games;
       this.dashboardData.forEach(d => {
         switch (d._id) {
           case 'Ghatkopar-East':
@@ -197,9 +208,9 @@ export class PlayerListComponent implements OnInit {
     const temp = this.temp.filter(d => {
 
       if (val.includes(d))
-        return d.name?.toLowerCase().indexOf(val) !== -1 || !val;
+        return d.firstName?.toLowerCase().indexOf(val) !== -1 || !val;
       else
-        return d.name?.toLowerCase().indexOf(val) !== -1 || !val;
+        return d.firstName?.toLowerCase().indexOf(val) !== -1 || !val;
     });
 
     this.rows = temp;
@@ -220,6 +231,47 @@ export class PlayerListComponent implements OnInit {
     num = num.toString();
     while (num.length < size) num = "0" + num;
     return num;
+  }
+
+  deleteUser(player, deleteModal, msgModal) {
+    this.deletePlayer = player;
+    this.modalService.open(deleteModal, { centered: true }).result.then(
+      (result) => {
+        if (result === 'delete') {
+          console.log(`Closed with: ${result}`);
+          this.removePlayer(player._id, msgModal);
+        }
+      },
+      (reason) => {
+        console.log(`Dismissed ${reason}`);
+      },
+    );
+  }
+
+  removePlayer(id, msgModal) {
+    this.serv.removePlayer(id).subscribe(
+      res => {
+        this.modalMsg = 'Player Deleted successfully';
+        this.modalService.open(msgModal, { scrollable: true, size: 'md', windowClass: 'customModal-xl' });
+        setTimeout(() => {
+          this.modalService.dismissAll();
+          this.modalMsg = "";
+        }, 2500);
+        this.getPlayersData();
+      },
+      err => {
+        if (err.error && err.error.message) {
+          this.modalMsg = err.error.message;
+        }
+        else {
+          this.modalMsg = 'Server error, please try again';
+        }
+        this.modalService.open(msgModal, { scrollable: true, size: 'md', windowClass: 'customModal-xl' });
+        setTimeout(() => {
+          this.modalService.dismissAll();
+          this.modalMsg = "";
+        }, 2500);
+      })
   }
 
 }

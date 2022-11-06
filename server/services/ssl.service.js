@@ -21,8 +21,8 @@ sslService.getDashboard = async (req, res) => {
         var regs = await registerationModel.aggregate([
             {
                 '$project': {
-                    'sabha': 1, 
-                    'memberType': 1, 
+                    'sabha': 1,
+                    'memberType': 1,
                     'onlyPlayer': {
                         '$cond': [
                             {
@@ -31,7 +31,7 @@ sslService.getDashboard = async (req, res) => {
                                 ]
                             }, 1, 0
                         ]
-                    }, 
+                    },
                     'onlySpectator': {
                         '$cond': [
                             {
@@ -44,18 +44,34 @@ sslService.getDashboard = async (req, res) => {
                 }
             }, {
                 '$group': {
-                    '_id': '$sabha', 
+                    '_id': '$sabha',
                     'countPlayer': {
                         '$sum': '$onlyPlayer'
-                    }, 
+                    },
                     'countSpectator': {
                         '$sum': '$onlySpectator'
                     }
                 }
             }
         ]);
+
+        var games = await registerationModel.aggregate([
+            {
+                '$unwind': {
+                    'path': '$sports'
+                }
+            }, {
+                '$group': {
+                    '_id': '$sports',
+                    'sum': {
+                        '$sum': 1
+                    }
+                }
+            }
+        ])
+
         if (regs?.length > 0) {
-            return { statusCode: 200, message: 'Registeration Dashboard', data: regs, res }
+            return { statusCode: 200, message: 'Registeration Dashboard', data: { regs, games }, res }
         }
         else {
             return { statusCode: 404, message: 'No registerations found', data: '', res }
@@ -71,7 +87,7 @@ sslService.register = async (req, res) => {
         const id = await playerExists(emailId, mobileNo);
         if (id == 0) {
             var lastId = await getLastSSLId();
-            var user = await createPlayerEntry(req.body,lastId);
+            var user = await createPlayerEntry(req.body, lastId);
             if (user) {
                 return { statusCode: 200, message: 'Register Successful', data: user, res }
             }
@@ -84,7 +100,23 @@ sslService.register = async (req, res) => {
             return { statusCode: 401, message: 'EmailId or MobileNo already exists', data: '', res }
         }
     } catch (e) {
-        logger.error('Registeration ERror ',e);
+        logger.error('Registeration ERror ', e);
+        console.log("error", e);
+        return { statusCode: 500, message: 'Internal Server Error', data: '', res, error: e }
+    }
+}
+
+sslService.removePlayer = async (req, res) => {
+    try {
+        var rr = await registerationModel.deleteOne({ _id: req.body.id });
+        console.log(rr);
+        if (rr.deletedCount === 1) {
+            return { statusCode: 200, message: 'Deleted Successfully', data: rr, res }
+        }
+        logger.error(rr);
+        return { statusCode: 500, message: 'Error deleting player', data: '', res }
+    } catch (e) {
+        logger.error('Delete ERror ', e);
         console.log("error", e);
         return { statusCode: 500, message: 'Internal Server Error', data: '', res, error: e }
     }
@@ -93,7 +125,7 @@ sslService.register = async (req, res) => {
 const getLastSSLId = async (body) => {
     try {
         const player = await registerationModel.findOne({}, { sequence: 1 }).sort({ sequence: 'descending' });
-        if(player.sequence) {
+        if (player.sequence) {
             return player.sequence
         }
         return 0;
@@ -102,9 +134,9 @@ const getLastSSLId = async (body) => {
     }
 }
 
-const createPlayerEntry = async (body,lastId) => {
+const createPlayerEntry = async (body, lastId) => {
     try {
-        body.sequence = (lastId+1);
+        body.sequence = (lastId + 1);
         const player = await registerationModel.create(body);
         return player;
     } catch (error) {

@@ -6,21 +6,25 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-url:string = '';
-  constructor(private http:HttpClient) {
+  url: string = '';
+  constructor(private http: HttpClient) {
     this.url = environment.applicationURL;
   }
 
   getUsers() {
-    return this.http.get(this.url+'/ssl/registerations');
+    return this.http.get(this.url + '/ssl/registerations');
   }
 
   getDash() {
-    return this.http.get(this.url+'/ssl/dashboard');
+    return this.http.get(this.url + '/ssl/dashboard');
   }
 
-  addUser(formData:any) {
-    return this.http.post(this.url+'/ssl/register', formData);
+  addUser(formData: any) {
+    return this.http.post(this.url + '/ssl/register', formData);
+  }
+
+  removePlayer(id) {
+    return this.http.post(this.url + '/ssl/removePlayer', { id });
   }
 
   //generate excel

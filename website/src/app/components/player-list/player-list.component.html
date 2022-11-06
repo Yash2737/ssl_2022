@@ -2,7 +2,7 @@
   <h2 class="pb-2">Admin Dashboard</h2>
   <p class="border-bottom"> Mandal wise <b>Spectators </b> are shown in bracket</p>
   <div class="row mb-3">
-    <div class="col-md-2">
+    <div class="col-sm-2 col-6">
       <div class="card text-center mb-2">
         <div class="card-header bg-info">
           Total Players
@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-sm-2 col-6">
       <div class="card text-center mb-2">
         <div class="card-header bg-warning">
           Total Spectators
@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-2" *ngFor="let d of dashboardData">
+    <div class="col-sm-2 col-6" *ngFor="let d of dashboardData">
       <div class="card text-center mb-2">
         <div class="card-header">
           {{d._id}}
@@ -36,6 +36,20 @@
           </div>
         </div>
 
+      </div>
+    </div>
+  </div>
+  <h2 class="pb-2">Games Dashboard</h2>
+  <p class="border-bottom"> Registeration per games</p>
+  <div class="row mb-3">
+    <div class="col-sm-2 col-6" *ngFor="let g of gamesDashboard">
+      <div class="card text-center mb-2">
+        <div class="card-header">
+          {{g._id}}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{g.sum}}</h5>
+        </div>
       </div>
     </div>
   </div>
@@ -64,6 +78,7 @@
     <table class="table table-bordered table-hover table-responsive-lg table-striped" id="excel-table">
       <thead class="thead-dark">
         <tr>
+          <th *ngIf="currentUser === 'vaibhav@ssl.com'" scope="col">A</th>
           <th scope="col">No.</th>
           <th scope="col">Reg ID</th>
           <th scope="col">Name</th>
@@ -76,6 +91,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let player of rows; let i = index">
+          <th *ngIf="currentUser === 'vaibhav@ssl.com'" scope="row"><button (click)="deleteUser(player,deleteModal, msgModal)"
+              class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button></th>
           <th scope="row">{{i+1}}</th>
           <td>{{player?.sslId }}</td>
           <td>{{player?.firstName}} {{player?.lastName}}</td>
@@ -128,3 +145,29 @@
     </div>
   </div>
 </div>
+<!-- Delete Modal -->
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Delete confirmation !</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <p><strong>Are you sure you want to delete <span class="text-primary">"{{deletePlayer.firstName}} {{deletePlayer.lastName}}"</span> Player?</strong></p>
+    <p> All information associated to this player will be permanently deleted. <span class="text-danger">This
+        operation can not be undone.</span></p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('delete')">Delete</button>
+  </div>
+</ng-template>
+
+<!-- Message Modal -->
+<ng-template #msgModal let-modal>
+  <div class="modal-body">
+      <p>{{modalMsg}}</p>
+      <button type="button" class="close" #closeBtn aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+</ng-template>
