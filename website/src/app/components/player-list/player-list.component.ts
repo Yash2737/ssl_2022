@@ -124,7 +124,7 @@ export class PlayerListComponent implements OnInit {
           } else {
             this.sabhaOptionDisplay = this.sabhaOption.filter(s => s == this.currentRole);
           }
-       
+
           this.getPlayersData();
 
         } else {
@@ -166,20 +166,22 @@ export class PlayerListComponent implements OnInit {
         switch (d._id) {
           case 'Ghatkopar-East':
           case 'Asalpha':
-            d.target = 130;
+            d.target = 150;
             break;
           case 'Kurla':
-          case 'Mulund':
           case 'Badlapur':
           case 'Vikhroli':
-            d.target = 40;
+          case 'Thane':
+            d.target = 60;
+            break;
+          case 'Mulund':
+            d.target = 50;
             break;
           case 'Chirag Nagar':
-          case 'Sarvodaya':
-            d.target = 90;
+            d.target = 100;
             break;
-          case 'Thane':
-            d.target = 30;
+          case 'Sarvodaya':
+            d.target = 110;
             break;
         }
       });
