@@ -7,7 +7,7 @@ import { RegisterComponent } from './components/register/register.component';
 const routes: Routes = [
   {path:'home',component:HomeComponent},
   {path:'register',component:RegisterComponent},
-  {path:'player-list',component:PlayerListComponent},
+  {path:'admin',component:PlayerListComponent},
   {path:'',redirectTo:'home',pathMatch:'full'}
 ];
 

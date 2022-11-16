@@ -8,3 +8,27 @@
     box-sizing: border-box;
     scroll-behavior: smooth;
 }
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../src/assets/fonts/Poppins-Regular.ttf')  format('truetype');
+    }
+    @font-face {
+        font-family: 'Poppins-bold';
+        src: url('../src/assets/fonts/Poppins-Bold.ttf')  format('truetype');
+        }
+body {
+    font-family: 'Poppins';
+}
+
+.w-fit-content {
+    width: fit-content;
+}
+
+.w-unset {
+    width: unset;
+}
+
+h1,h2,h3,h4,h5 {
+    font-family: 'Poppins-bold';
+}

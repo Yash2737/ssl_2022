@@ -1,32 +1,231 @@
-.containerBx {
-    padding: 20px;
-    display: flex;
-    height: calc(100vh - 50px);
-    text-align: center;
-    flex-direction: column;
-    justify-content: center;
-    a {
-        font-size: 1em;
-        width: 150px;
-        margin: auto;
-        text-decoration: none;
-        letter-spacing: 2px;
-        transition: 0.5s;
-        margin-bottom: 20px;
-        color: darkblue;
-        cursor: pointer;
+// .containerBx {
+//     padding: 20px;
+//     display: flex;
+//     height: calc(100vh - 50px);
+//     text-align: center;
+//     flex-direction: column;
+//     justify-content: center;
+//     a {
+//         font-size: 1em;
+//         width: 150px;
+//         margin: auto;
+//         text-decoration: none;
+//         letter-spacing: 2px;
+//         transition: 0.5s;
+//         margin-bottom: 20px;
+//         color: darkblue;
+//         cursor: pointer;
+//     }
+//     img {
+//         width: 80%;
+//         height: calc(100vh - 150px);
+//         margin: auto;
+//     }
+// }
+
+// @media (max-width: 480px) {
+//     .containerBx {
+//         img {
+//             width: 100%;
+//         }
+//     }
+// }
+
+.carousel-caption {
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: unset;
+}
+
+.bg-trans {
+    background-color: rgb(28 28 28 / 85%)
+}
+
+.bg-trans,
+.navbar-brand {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.bg-trans .nav-link:not(.active) {
+    color: white;
+}
+
+.bg-trans .nav-link.active {
+    color: #D8514E;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.navbar-brand img {
+    width: 130px;
+}
+
+@media only screen and (max-width: 992px) {
+    .navbar-brand img {
+        width: 30px;
     }
-    img {
-        width: 80%;
-        height: calc(100vh - 150px);
-        margin: auto;
+
+    .carousel-item img {
+        height: 390px;
     }
 }
 
-@media (max-width: 480px) {
-    .containerBx {
-        img {
-            width: 100%;
-        }
+.carousel-item img {
+    height: 100vh;
+}
+
+.navbar {
+    z-index: 100;
+}
+
+.btn {
+    background: transparent linear-gradient(89deg, #F84A43 0%, #FF7848 100%) 0% 0% no-repeat padding-box;
+    border: 1px solid #707070;
+    border-radius: 35px;
+    opacity: 1;
+    color: #ffffff;
+}
+
+.main-panel {
+    z-index: 99;
+}
+
+.color-primary {
+    color: #D8514E;
+}
+
+#what .row {
+    padding-top: 125px;
+    padding-bottom: 60px;
+}
+
+#what img,
+#games img,
+#awardssec img {
+    width: inherit;
+}
+
+
+// Importance
+#importance {
+    height: 100vh;
+    background-size: cover;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-image: url(../../../assets/img/importance.png);
+    box-shadow: inset 0 0 0 2000px rgb(0 0 0 / 65%);
+}
+
+@media only screen and (min-width: 990px) {
+    #importance .header {
+        padding-top: 106px;
     }
+
+    #games .row {
+        padding-top: 106px;
+    }
+
+    #awardssec .header {
+        padding-top: 106px;
+    }
+
+    .card {
+        min-width: 170px;
+    }
+
+    #importance {
+        height: max-content;
+        padding: 0.5rem;
+    }
+}
+@media only screen and (max-width: 990px) {
+    section {
+        height: auto !important;
+        padding: 0.5rem;
+    }
+}
+
+@media only screen and (max-width: 770px) {
+    #important {
+        height: auto !important;
+    }
+
+    .container {
+        max-width: fit-content;
+    }
+
+    .card {
+        min-width: auto !important;
+    }
+
+    .carousel-caption.d-none {
+        display: unset !important;
+    }
+}
+
+
+
+#importance .container>* {
+    margin-bottom: 4rem;
+}
+
+#importance .container .card {
+    text-align: center;
+    width: fit-content;
+    border: 3px solid black;
+    border-radius: 15px;
+    height: fit-content;
+
+}
+
+.imp-card:nth-child(odd) {
+    border-color: #2EA8D9 !important;
+}
+
+.imp-card:nth-child(even) {
+    border-color: #D8514E !important;
+}
+
+// Games
+
+#games li {
+    list-style: none;
+    font-weight: bold;
+    font-size: large;
+}
+
+#games li:not(:last-child) {
+    margin-bottom: 25px;
+}
+
+.listdata {
+    padding-left: 50px;
+}
+
+// awards
+
+#awardssec {
+    background: #00141C
+}
+
+#awards {
+    padding-top: 5rem;
+}
+
+#awards li {
+    list-style-image: url(../../../assets/img/starlist.png);
+    color: white;
+}
+
+#awards li:not(:last-child) {
+    margin-bottom: 25px;
+}
+
+.color-blue {
+    color: #2EA8D9;
+}
+
+.social-f a {
+    cursor: pointer;
 }
