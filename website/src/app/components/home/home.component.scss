@@ -118,7 +118,7 @@
 }
 
 @media only screen and (min-width: 990px) {
-    #importance .header {
+    #importance .header,#attraction .header {
         padding-top: 106px;
     }
 
@@ -134,10 +134,12 @@
         min-width: 170px;
     }
 
-    #importance {
+    #importance, #attraction {
         height: max-content;
         padding: 0.5rem;
     }
+
+    
 }
 @media only screen and (max-width: 990px) {
     section {
@@ -233,4 +235,27 @@
 
 .footer-container{
     width: 100%;
+}
+
+// Attraction
+
+#attraction {
+    min-height: 100vh;
+    background-size: cover;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-image: url(../../../assets/img/attraction.png);
+    box-shadow: inset 0 0 0 2000px rgb(0 0 0 / 65%);
+}
+
+.img-box {
+    img {
+        max-width: 300px;
+    }
+    h5 {
+        text-align: center;
+        padding-top: 20px;
+        color: white;
+        font-weight: bold;
+    }
 }
