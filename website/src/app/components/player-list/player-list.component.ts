@@ -114,10 +114,7 @@ export class PlayerListComponent implements OnInit {
   }
 
   onSubmit() {
-    this.currentRole = this.adminArr[0].role;
-          this.currentUser = this.adminArr[0].user;
-          this.getPlayersData();
-          return;
+    
     for (let i = 0; i < this.adminArr.length; i++) {
       if (this.adminArr[i].user == this.formModel.value.userID) {
         if (this.adminArr[i].password == this.formModel.value.Password) {
