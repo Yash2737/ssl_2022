@@ -27,6 +27,12 @@ export class AuthService {
     return this.http.post(this.url + '/ssl/removePlayer', { id });
   }
 
+  updateSevaReceived(value:string)
+  {
+    return this.http.post(this.url + '/ssl/updateSevaReceived', value);
+
+  }
+
   //generate excel
 
 }

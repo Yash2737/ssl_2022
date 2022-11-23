@@ -111,6 +111,7 @@
           <th scope="col">Phone</th>
           <th scope="col">Participant Type</th>
           <th scope="col" *ngFor="let s of sportOption">{{s}}</th>
+          <th scope="col">Seva</th>
         </tr>
       </thead>
       <tbody>
@@ -125,6 +126,15 @@
           <td>{{player?.mobileNo}}</td>
           <td>{{player?.memberType}}</td>
           <td *ngFor="let s of sportOption">{{player?.sports.includes(s) ? s : 'NA'}}</td>
+          <td >
+            <select style="width:auto" class="form-control" id="exampleFormControlSelect1" (change)="onSevaReceivedChange($event)"
+            >
+      
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>             
+              
+            </select>
+          </td>
         </tr>
       </tbody>
     </table>
