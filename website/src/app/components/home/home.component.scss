@@ -182,11 +182,11 @@
 
 }
 
-.imp-card:nth-child(odd) {
+.border-blue {
     border-color: #2EA8D9 !important;
 }
 
-.imp-card:nth-child(even) {
+.border-red {
     border-color: #D8514E !important;
 }
 
@@ -235,6 +235,10 @@
 
 .footer-container{
     width: 100%;
+}
+
+.icon-holder * {
+    margin-left: 15px;
 }
 
 // Attraction

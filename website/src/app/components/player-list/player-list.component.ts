@@ -166,22 +166,22 @@ export class PlayerListComponent implements OnInit {
         switch (d._id) {
           case 'Ghatkopar-East':
           case 'Asalpha':
-            d.target = 150;
+            d.target = 175;
             break;
           case 'Kurla':
-          case 'Badlapur':
+          case 'Mulund':
           case 'Vikhroli':
           case 'Thane':
             d.target = 60;
             break;
-          case 'Mulund':
-            d.target = 50;
+          case 'Badlapur':
+            d.target = 70;
             break;
           case 'Chirag Nagar':
-            d.target = 100;
+            d.target = 110;
             break;
           case 'Sarvodaya':
-            d.target = 110;
+            d.target = 120;
             break;
         }
       });
