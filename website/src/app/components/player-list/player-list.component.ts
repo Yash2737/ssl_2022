@@ -114,6 +114,7 @@ export class PlayerListComponent implements OnInit {
   }
 
   onSubmit() {
+    
     for (let i = 0; i < this.adminArr.length; i++) {
       if (this.adminArr[i].user == this.formModel.value.userID) {
         if (this.adminArr[i].password == this.formModel.value.Password) {
@@ -150,7 +151,26 @@ export class PlayerListComponent implements OnInit {
       }
       this.getDashboardData();
     }, (err) => {
+      let mockJSON=[{
+        sslId:1,
+        firstName:'harsh',
+        sabha:'ghat east',
+        emailId:'h@gmail.com',
+        mobileNo:9988888888,
+        memberType:'not sure',
+        sports:[
+          'Football',
+          'Relay Race',
+          'Tug of War',
+          'Slow Cycle Race',
+          'Volley ball',          
+          'Langdi',
+          'Laghori',
+        ],
+        sevaReceived:'No'
+      }]
 
+      this.rows = mockJSON;
     })
     this.closeModal.nativeElement.click();
     this.invalidMsg = '';
@@ -274,6 +294,16 @@ export class PlayerListComponent implements OnInit {
           this.modalMsg = "";
         }, 2500);
       })
+  }
+
+  onSevaReceivedChange(event)
+  {
+    console.log(event?.target?.value,"onSevaReceivedChange")
+    //uncomment for API call
+    // this.serv.updateSevaReceived(event?.target?.value).subscribe((response:any)=>{
+    //   console.log(response)
+    // })
+
   }
 
 }
